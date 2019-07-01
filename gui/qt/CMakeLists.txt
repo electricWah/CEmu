@@ -334,6 +334,8 @@ qt_add_resources(CEmu "skins"
     FILES
         "resources/skin/ti83pce.png"
         "resources/skin/ti84pce.png"
+        "resources/skin/ti83pce_ep.png"
+        "resources/skin/ti84pcet_pe.png"
 )
 qt_add_resources(CEmu "setup"
     PREFIX "/setup"
