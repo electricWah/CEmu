@@ -19,6 +19,8 @@
 #include "backlight.h"
 #include "realclock.h"
 #include "defines.h"
+#include "arm/armcpu.h"
+#include "arm/armmem.h"
 
 #include <stddef.h>
 #include <stdio.h>

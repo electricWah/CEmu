@@ -1,5 +1,6 @@
 #include "spi.h"
 #include "bus.h"
+#include "coproc.h"
 #include "cpu.h"
 #include "debug/debug.h"
 #include "emu.h"
@@ -442,9 +443,15 @@ static void null_spi_deselect(void) {
 
 static void spi_set_device_funcs(void) {
     if (spi.arm) {
-        spi.device_select = null_spi_select;
-        spi.device_transfer = null_spi_transfer;
-        spi.device_deselect = null_spi_deselect;
+        if (asic.python) {
+            spi.device_select = coproc_spi_select;
+            spi.device_transfer = coproc_spi_transfer;
+            spi.device_deselect = coproc_spi_deselect;
+        } else {
+            spi.device_select = null_spi_select;
+            spi.device_transfer = null_spi_transfer;
+            spi.device_deselect = null_spi_deselect;
+        }
     } else {
         spi.device_select = panel_spi_select;
         spi.device_transfer = panel_spi_transfer;
