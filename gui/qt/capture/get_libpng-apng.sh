@@ -90,7 +90,7 @@ rm -f ../libpng-${LIBPNG_VERSION}-apng.patch || cerr
 
 # Build libpng-apng
 becho " ** Configuring libpng-apng..."
-./configure --with-libpng-prefix=a --enable-static --disable-shared CFLAGS="-O2 -fPIC" || cerr
+./configure --with-libpng-prefix=a --enable-static --disable-shared CFLAGS="-O2 -fPIC -mmacosx-version-min=10.13  -Werror=partial-availability" LDFLAGS="-Wl,-no_weak_imports" || cerr
 
 becho " ** Building libpng-apng..."
 make -j2 || cerr

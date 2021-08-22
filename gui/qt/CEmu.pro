@@ -87,8 +87,16 @@ if (!win32-msvc*) {
     }
 
     if (contains(DEFINES, LIB_ARCHIVE_SUPPORT)) {
-        CONFIG += link_pkgconfig
-        PKGCONFIG += zlib libarchive
+        # Try static libs first just in case...
+        if (macx : exists("/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/lib/libz.tbd")) {
+            LIBS += /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/lib/libz.tbd
+            LIBS += /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/lib/libarchive.tbd
+            # however, archive.h isn't exposed... Just load it from there (brew install libarchive)
+            INCLUDEPATH += /usr/local/opt/libarchive/include
+        } else {
+            CONFIG += link_pkgconfig
+            PKGCONFIG += zlib libarchive
+        }
     }
     # You should run ./capture/get_libpng-apng.sh first!
     isEmpty(USE_LIBPNG) {
@@ -105,6 +113,7 @@ if (!win32-msvc*) {
     }
     equals(USE_LIBPNG, "system") {
         message("Warning: unless your system libpng has APNG support, you will not be able to record screen captures!")
+        CONFIG += link_pkgconfig
         PKGCONFIG += libpng
     } else {
         !exists("$$PWD/capture/libpng-apng/.libs/libpng16.a"): error("You have to run $$PWD/capture/get_libpng-apng.sh first!")
@@ -178,7 +187,7 @@ QMAKE_CXXFLAGS  += $$GLOBAL_FLAGS
 QMAKE_LFLAGS    += $$GLOBAL_FLAGS
 
 if(macx) {
-    QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.12
+    QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.13
     ICON = resources/icons/icon.icns
     LIBS += -framework Cocoa
 }
