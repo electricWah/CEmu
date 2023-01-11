@@ -27,6 +27,7 @@ typedef struct asic_state {
     /* Populated based on revision */
     bool im2;
     bool serFlash;
+    bool python;
 } asic_state_t;
 
 extern asic_state_t asic;

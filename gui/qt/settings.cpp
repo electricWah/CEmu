@@ -50,6 +50,7 @@ const QString MainWindow::SETTING_DEBUGGER_AUTO_EQUATES     = QStringLiteral("De
 const QString MainWindow::SETTING_DEBUGGER_IGNORE_DMA       = QStringLiteral("Debugger/ignore_dma");
 const QString MainWindow::SETTING_DEBUGGER_ALLOW_ANY_REV    = QStringLiteral("Debugger/allow_any_rev");
 const QString MainWindow::SETTING_DEBUGGER_NORM_OS          = QStringLiteral("Debugger/norm_os");
+const QString MainWindow::SETTING_PYTHON_EDITION            = QStringLiteral("python_edition");
 const QString MainWindow::SETTING_SCREEN_FRAMESKIP          = QStringLiteral("Screen/frameskip");
 const QString MainWindow::SETTING_SCREEN_SCALE              = QStringLiteral("Screen/scale");
 const QString MainWindow::SETTING_SCREEN_SKIN               = QStringLiteral("Screen/skin");
@@ -961,6 +962,13 @@ void MainWindow::setAllowAnyRev(bool state) {
     m_config->setValue(SETTING_DEBUGGER_ALLOW_ANY_REV, state);
     emu.setAllowAnyRev(state);
     setAsicValidRevisions();
+}
+
+void MainWindow::setPythonEdition(bool state) {
+    ui->checkPythonEdition->setChecked(state);
+    m_config->setValue(SETTING_PYTHON_EDITION, state);
+    asic.python = state;
+    setCalcSkinTopFromType();
 }
 
 void MainWindow::setNormalOs(bool state) {
