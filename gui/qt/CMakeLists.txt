@@ -77,6 +77,7 @@ qt_add_executable(CEmu ${MAYBE_MACOSX_BUNDLE}
     ../../core/arm/spscqueue.c ../../core/arm/spscqueue.h
     ../../core/arm/sync.c ../../core/arm/sync.h
     ../../core/asic.c ../../core/asic.h
+    ../../core/coproc.c ../../core/coproc.h
     ../../core/atomics.h
     ../../core/backlight.c ../../core/backlight.h
     ../../core/bootver.c ../../core/bootver.h
