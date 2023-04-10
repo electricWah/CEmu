@@ -405,6 +405,7 @@ void panel_reset(void);
 bool panel_restore(FILE *image);
 bool panel_save(FILE *image);
 
+void panel_hw_reset(void);
 bool panel_hsync(void);
 void panel_vsync(void);
 void panel_refresh_pixels_until(uint32_t currTick);

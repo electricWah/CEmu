@@ -4,6 +4,7 @@
 #include "mem.h"
 #include "cpu.h"
 #include "lcd.h"
+#include "panel.h"
 #include "spi.h"
 #include "bus.h"
 #include "debug/debug.h"
@@ -125,7 +126,7 @@ static void control_write(const uint16_t pio, const uint8_t byte, bool poke) {
             }
             break;
         case 0x05:
-            if (control.ports[index] & (1 << 6) && !(byte & (1 << 6))) {
+            if ((control.ports[index] & ~byte) & (1 << 6)) {
                 cpu_crash("resetting bit 6 of port 5");
             }
             control.ports[index] = byte & 0x1F;
@@ -145,7 +146,10 @@ static void control_write(const uint16_t pio, const uint8_t byte, bool poke) {
                     control.readBatteryStatus = control.setBatteryStatus == BATTERY_DISCHARGED ? 0 : byte & 0x80 ? 0 : 3;
                     break;
             }
-            if (asic.python && (control.ports[index] ^ byte) >> 4 & 1) {
+            if ((control.ports[index] & ~byte) & (1 << 2)) {
+                panel_hw_reset();
+            }
+            if (asic.python && (control.ports[index] ^ byte) & (1 << 4)) {
                 spi_device_select(byte >> 4 & 1);
             }
             control.ports[index] = byte;
