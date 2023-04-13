@@ -368,6 +368,7 @@ MainWindow::MainWindow(CEmuOpts &cliOpts, QWidget *p) : QMainWindow(p), ui(new U
     connect(ui->checkSkin, &QCheckBox::stateChanged, this, &MainWindow::setSkinToggle);
     connect(ui->comboBoxAsicRev, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &MainWindow::setAsicRevision);
     connect(ui->checkSpi, &QCheckBox::toggled, this, &MainWindow::setLcdSpi);
+    connect(ui->checkGamma, &QCheckBox::toggled, this, &MainWindow::setLcdGamma);
     connect(ui->checkAlwaysOnTop, &QCheckBox::stateChanged, this, &MainWindow::setTop);
     connect(ui->emulationSpeed, &QSlider::valueChanged, this, &MainWindow::setEmuSpeed);
     connect(ui->emulationSpeedSpin, static_cast<void (QSpinBox::*)(int)>(&QSpinBox::valueChanged), this, &MainWindow::setEmuSpeed);
@@ -566,6 +567,7 @@ MainWindow::MainWindow(CEmuOpts &cliOpts, QWidget *p) : QMainWindow(p), ui(new U
     setLcdScale(m_config->value(SETTING_SCREEN_SCALE, 100).toInt());
     setSkinToggle(m_config->value(SETTING_SCREEN_SKIN, true).toBool());
     setLcdSpi(m_config->value(SETTING_SCREEN_SPI, true).toBool());
+    setLcdGamma(m_config->value(SETTING_SCREEN_GAMMA, true).toBool());
     setGuiSkip(m_config->value(SETTING_SCREEN_FRAMESKIP, 0).toInt());
     setKeypadHolding(m_config->value(SETTING_KEYPAD_HOLDING, true).toBool());
     setEmuSpeed(m_config->value(SETTING_EMUSPEED, 100).toInt());
