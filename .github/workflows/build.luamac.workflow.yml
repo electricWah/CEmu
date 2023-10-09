@@ -30,7 +30,7 @@ jobs:
       uses: actions/checkout@v3
       with:
         submodules: 'recursive'
-        ref: with-lua
+        ref: with_lua
 
     - name: Install dependencies
       run: |
